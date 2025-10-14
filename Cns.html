@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>广州景点介绍</title>
+    <style>
+        h1 {
+            margin: 0;
+            padding: 0;
+            line-height: 0;
+        }
+
+        /* 添加一些响应式设计 */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 700px;
+                margin: 0 auto;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .location-card>img {
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-content {
+            margin: 15% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        body {
+            background-color: #F5F0EB;
+            /* 改为传统茶色系中的浅秋香色 */
+            background-image: linear-gradient(to bottom right,
+                    rgba(230, 213, 195, 0.1) 0%,
+                    /* 茶色渐变层 */
+                    rgba(255, 255, 255, 0.2) 100%
+                    /* 留白效果 */
+                );
+        }
+
+        .location-card {
+            background: rgba(255, 251, 245, 0.95);
+            /* 绢帛质感的米白色 */
+            border: 1px solid #D4AF37;
+            /* 加入浅金色边框 */
+            box-shadow: 0 4px 12px rgba(198, 176, 147, 0.15);
+            /* 调整为茶色系阴影 */
+            position: relative;
+        }
+
+        /* 新增传统纹样装饰线 */
+        .location-card::before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg,
+                    transparent 10%,
+                    #D4AF37 10%,
+                    #D4AF37 90%,
+                    transparent 90%);
+            /* 金线云纹效果 */
+        }
+
+        h2 {
+            border-bottom: 2px solid #B78D65;
+            /* 改用深茶色分隔线 */
+            padding-bottom: 8px;
+            position: relative;
+        }
+
+        /* 新增书法笔触效果 */
+        h2::after {
+            content: "";
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: #C91F26;
+            /* 朱砂红点缀 */
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+        }
+
+        /* 全局盒模型重置 */
+        :root {
+            box-sizing: border-box;
+            /* 启用border-box盒模型[3,7](@ref) */
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: inherit;
+            /* 确保所有元素继承统一模型[1](@ref) */
+        }
+
+        .location-card {
+            /* 尺寸计算优化 */
+            width: calc(100% - 40px);
+            /* 保留外边距空间 */
+            margin: 20px auto;
+            /* 垂直外边距20px[7](@ref) */
+            padding: 25px 30px;
+            /* 内边距优化[5](@ref) */
+
+            /* 边框增强设计 */
+            border: 3px double #B78D65;
+            /* 双层茶色边框[5](@ref) */
+            border-radius: 12px;
+            /* 中式圆角 */
+
+            /* 阴影优化 */
+            box-shadow:
+                0 4px 12px rgba(198, 176, 147, 0.15),
+                /* 主阴影 */
+                inset 0 0 8px rgba(230, 213, 195, 0.2);
+            /* 内阴影模拟宣纸纹理[5](@ref) */
+        }
+
+        /* 防止外边距合并 */
+        .location-card+.location-card {
+            margin-top: 40px;
+            /* 双倍间距避免重叠[7](@ref) */
+        }
+
+        /* 内容区域优化 */
+        h2 {
+            margin: 0 0 15px;
+            /* 下边距增加 */
+            padding: 0 0 12px;
+            /* 标题分隔空间 */
+        }
+
+        p {
+            padding: 8px 0;
+            /* 段落呼吸感 */
+            margin: 12px 0;
+            /* 段落间距 */
+        }
+
+        .current-page {
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 3px solid #D4AF37;
+            /* 金箔色指示条 */
+        }
+    </style>
+</head>
+
+<body>
+    <h1><input type="button" value="← " id="btn" class="return" onclick="history.back()">
+        <input type="button" value="English" id="btn2" class="language"
+            onclick="window.location.href = '../Scenic spot E/Ens.html'">
+    </h1>
+    <div class="container">
+        <div class="location-card">
+            <h2>​广州长隆旅游度假区</h2>
+            <h4>地址：广东省广州市番禺区迎宾路</h4>
+            <img src="长隆.jpg" class="clickable" style="animation: fadeIn 2s ease-in-out;">
+            <img src="长隆2.jpg" class="clickable" style="animation: fadeIn 2s ease-in-out;">
+            <p>景点亮点：<br>
+                长隆野生动物世界：全球最大野生动物主题公园之一，可乘坐小火车穿越非洲草原，近距离观赏白虎、长颈鹿、熊猫等动物。<br>
+                长隆欢乐世界：拥有“垂直过山车”“十环过山车”等世界级游乐设施，适合追求刺激的游客。<br>
+                长隆国际大马戏：每晚19:30上演高空特技与奇幻表演，需提前占座或升级座位。<br>
+                飞鸟乐园：可观赏300多种鸟类，包括火烈鸟和丹顶鹤，并体验乘船探索湿地。
+            </p>
+        </div>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img src="" id="modalImg" style="width:100%">
+        </div>
+    </div>
+
+    </div>
+    <script>
+        const clickableImages = document.querySelectorAll('.clickable');
+
+        // 获取模态框和关闭按钮
+        const modal = document.getElementById('myModal');
+        const modalImg = document.getElementById('modalImg');
+        const closeBtn = document.querySelector('.close');
+
+        // 为每张图片添加点击事件
+        clickableImages.forEach(img => {
+            img.addEventListener('click', function () {
+                modal.style.display = 'block';
+                modalImg.src = this.src; // 设置模态框中图片的源
+            });
+        });
+
+        // 关闭模态框
+        closeBtn.onclick = function () {
+            modal.style.display = 'none';
+        };
+
+        // 点击模态框外部时关闭
+        window.onclick = function (event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+        // 可以添加一些交互效果
+        document.addEventListener('DOMContentLoaded', function () {
+            const cards = document.querySelectorAll('.location-card');
+            cards.forEach(card => {
+                card.addEventListener('touchstart', function () {
+                    this.style.transform = 'translateY(2px)';
+                    this.style.transition = 'transform 0.2s ease';
+                });
+                card.addEventListener('touchend', function () {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+        function sealEffect(btn) {
+            let isAnimating = false;
+
+            // 触摸开始
+            btn.addEventListener('touchstart', () => {
+                if (!isAnimating) {
+                    btn.style.transform = 'scale(0.95)';
+                    btn.style.background = 'rgba(183,141,101,0.1)';
+                }
+            });
+
+            // 触摸结束
+            btn.addEventListener('touchend', () => {
+                btn.style.transform = 'scale(1)';
+                btn.style.background = '';
+            });
+
+            // 兼容桌面端
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'scale(0.95)';
+                btn.style.background = 'rgba(183,141,101,0.1)';
+            });
+
+            btn.addEventListener('mouseup', () => {
+                btn.style.transform = 'scale(1)';
+                btn.style.background = '';
+            });
+
+            // 防误触处理
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'scale(1)';
+                btn.style.background = '';
+            });
+        }
+
+        // 应用效果
+        sealEffect(document.getElementById('btn'));
+        sealEffect(document.getElementById('btn2'));
+    </script>
+</body>
+
+</html>
+<!-- <div class="container">
+        <div class="location-card">
+        <h2></h2>
+        <h4></h4>
+        <p></p>
+        </div>
+    </div> -->
