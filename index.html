@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to China</title>
+    <style>
+        /* 欢迎动画 */
+        @keyframes slide {
+            0% {
+                transform: translateY(250px);
+                opacity: 0;
+            }
+            50% {
+                transform: translateY(0px);
+                opacity: 1;
+            }
+            75% {
+                transform: translateY(0px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-250px);
+                opacity: 0;
+            }
+        }
+
+        /* 语言动画 */
+        @keyframes slide1 {
+            0% {
+                transform: translateY(250px);
+                opacity: 0;
+            }
+            50% {
+                transform: translateY(250px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+
+        /* 按钮动画 */
+        @keyframes slide2 {
+            0% {
+                opacity: 0;
+            }
+            75% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        h2 {
+            margin: auto;
+            text-align: center;
+            font-size: 30px;
+            color: black;
+            display: block;
+        }
+
+        #shou1 {
+            padding-top: 250px;
+        }
+
+        #shou1, #shou2 {
+            animation: slide 3s;
+            opacity: 0;
+        }
+
+        p {
+            text-align: center;
+            line-height: 100px;
+        }
+
+        #btn1, #btn2 {
+            width: 21%;
+            height: 35px;
+            font-size: 16px;
+            border: solid 0px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: var(--primary-color);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #btn1:hover, #btn2:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .lang1 {
+            margin-top: -20%;
+            animation: slide1 6.5s;
+            text-align: center;
+        }
+
+        .lang2 {
+            animation: slide2 6.5s;
+            text-align: center;
+        }
+
+        body {
+            transition: opacity 0.5s ease;
+        }
+
+        .fade-out {
+            opacity: 0;
+        }
+
+        .container {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* 添加一些响应式设计 */
+        @media (min-height: 768px) {
+            .container {
+                max-height: 700px;
+                margin: 0 auto;
+            }
+        }
+
+        /* 添加传统纹样底纹 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg...传统云纹图案.../>');
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        /* 添加装裱边框 */
+        .container::after {
+            content: "";
+            position: absolute;
+            inset: 20px;
+            border: 3px double var(--gold-border);
+            /* 浅金双线框 */
+            pointer-events: none;
+        }
+
+        /* 继承子页面配色体系 */
+        :root {
+            --primary-color: #B78D65;
+            /* 深茶色 */
+            --accent-color: #C91F26;
+            /* 朱砂红 */
+            --bg-color: #F5F0EB;
+            /* 浅秋香底色 */
+            --gold-border: #D4AF37;
+            /* 金箔色 */
+
+            /* 新增传统渐变 */
+            --decorative-gradient: linear-gradient(145deg,
+                    rgba(212, 175, 55, 0.1) 0%,
+                    rgba(255, 251, 245, 0.3) 50%,
+                    rgba(212, 175, 55, 0.1) 100%);
+        }
+
+        /* 应用渐变层 */
+        .container {
+            background: var(--decorative-gradient);
+            box-shadow: 0 8px 32px rgba(198, 176, 147, 0.15);
+            /* 茶色投影 */
+        }
+
+        @media (max-width: 768px) {
+            body::before {
+                background-size: 300% auto;
+                /* 移动端纹样密度调整 */
+            }
+
+            .container::after {
+                inset: 10px;
+                /* 边框间距缩小 */
+                border-width: 2px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 id="shou1">欢迎来到中国</h2>
+        <h2 id="shou2">Welcome to China</h2>
+        <h2 class="lang1">语言<br>Language</h2>
+        <p class="lang2">
+            <input type="button" value="简体中文" id="btn1">&nbsp;&nbsp;&nbsp;
+            <input type="button" value="English" id="btn2">
+    <script>
+        const shou1 = document.getElementById('shou1');
+        const shou2 = document.getElementById('shou1');
+        Element(shou1);
+        Element(shou2);
+        // 监听动画结束事件
+        function Element(element) {
+            element.addEventListener('animationend', function () {
+                this.style.pointerEvents = 'none';
+                this.style.opacity = '0';
+            });
+        }
+        document.getElementById('btn1').addEventListener('click', function () {
+            // 添加淡出效果
+            document.body.classList.add('fade-out');
+            // 0.5秒后跳转（匹配过渡时间）
+            setTimeout(function () {
+                window.location.href = './JmapC.html';
+            }, 500);
+        });
+        document.getElementById('btn2').addEventListener('click', function () {
+            // 添加淡出效果
+            document.body.classList.add('fade-out');
+            // 0.5秒后跳转（匹配过渡时间）
+            setTimeout(function () {
+                window.location.href = './JmapE.html';
+            }, 500);
+        });
+        function createRippleEffect(button) {
+            button.style.position = 'relative';
+            button.style.overflow = 'hidden';
+
+            button.addEventListener('click', function (e) {
+                const ripple = document.createElement('div');
+                const rect = this.getBoundingClientRect();
+
+                // 动态样式
+                Object.assign(ripple.style, {
+                    position: 'absolute',
+                    width: '50px',
+                    height: '50px',
+                    background: 'rgba(201,31,38,0.2)',
+                    borderRadius: '50%',
+                    pointerEvents: 'none',
+                    left: e.clientX - rect.left - 25 + 'px',
+                    top: e.clientY - rect.top - 25 + 'px',
+                    opacity: '1',
+                    transform: 'scale(0)'
+                });
+
+                this.appendChild(ripple);
+
+                // 动画执行
+                requestAnimationFrame(() => {
+                    ripple.style.transition = 'all 0.6s ease-out';
+                    ripple.style.transform = 'scale(4)';
+                    ripple.style.opacity = '0';
+                });
+
+                // 自动移除
+                setTimeout(() => ripple.remove(), 600);
+            });
+        }
+
+        // 应用特效
+        createRippleEffect(document.getElementById('btn1'));
+        createRippleEffect(document.getElementById('btn2'));
+        function borderAnimation(btn) {
+            const originalBorder = btn.style.border;
+
+            // 触摸互动
+            btn.addEventListener('touchstart', () => {
+                btn.style.border = '2px double #D4AF37';
+                btn.style.boxShadow = '0 0 8px rgba(212,175,55,0.3)';
+            });
+
+            btn.addEventListener('touchend', () => {
+                btn.style.border = originalBorder;
+                btn.style.boxShadow = '';
+            });
+
+            // 桌面端适配
+            btn.addEventListener('mouseenter', () => {
+                btn.style.border = '2px double #D4AF37';
+                btn.style.transition = 'border 0.3s ease';
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                btn.style.border = originalBorder;
+                btn.style.boxShadow = '';
+            });
+        }
+
+        // 应用效果
+        document.querySelectorAll('.return, .language').forEach(borderAnimation);
+
+    </script>
+</body>
+
+</html>

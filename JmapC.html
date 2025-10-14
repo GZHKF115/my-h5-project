@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广东地图</title>
+    <style>
+        #container {
+            width: 100%;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script src="https://webapi.amap.com/maps?v=2.0&key=106de02a1d017d7321f70a04add4e66b"></script>
+    <script>
+
+        var map = new AMap.Map('container', {
+            zoom: 8,
+            center: [113.5, 23.2],
+            
+        });
+
+        map.on('error', function () {
+                alert('地图加载失败，请检查网络连接！');
+            });
+
+        var markers = [
+            {
+                name: '广州白云国际机场',
+                position: [113.308, 23.392],
+                url: './Scenic spot C/Cgz.html',
+                label: {
+                    content: '广州白云国际机场',
+                    offset: [4, -1]
+                }
+            },
+            {
+                name: '深圳宝安国际机场',
+                position: [113.819, 22.639],
+                url: './Scenic spot C/Csz.html',
+                label: {
+                    content: '深圳宝安国际机场',
+                    offset: [3, -2]
+                }
+            },
+            {
+                name: '揭阳潮汕国际机场',
+                position: [116.503, 23.552],
+                url: './Scenic spot C/Cjy.html',
+                label: {
+                    content: '揭阳潮汕国际机场',
+                    offset: [5, 0]
+                }
+            },
+            {
+                name: '蛇口港口岸',
+                position: [113.913, 22.476],
+                url: './Scenic spot C/Csk.html',
+                label: {
+                    content: '蛇口港口岸',
+                    offset: [5, 0]
+                }
+            },
+            {
+                name: '南沙港口岸',
+                position: [113.569, 22.795],
+                url: './Scenic spot C/Cns.html',
+                label: {
+                    content: '南沙港口岸',
+                    offset: [4, -2]
+                }
+            }
+        ];
+
+
+        markers.forEach(function (markerInfo) {
+            var marker = new AMap.Marker({
+                position: markerInfo.position,
+                title: markerInfo.name,
+                label: markerInfo.label,
+                map: map
+            });
+
+
+            marker.on('click', function () {
+                window.location.href = markerInfo.url;
+            });
+        });
+    </script>
+</body>
+
+</html>
